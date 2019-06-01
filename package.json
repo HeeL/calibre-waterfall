@@ -4,13 +4,15 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "node server.js",
-    "build": "next build"
+    "dev": "node server",
+    "build": "next build",
+    "test": "mocha --recursive './test/**/*.js'"
   },
   "keywords": [],
   "author": "Sergii Paryzhskyi <parizhskiy@gmail.com>",
   "license": "MIT",
   "dependencies": {
+    "dotenv": "^8.0.0",
     "express": "^4.17.1",
     "next": "^8.1.0",
     "react": "^16.8.6",
