@@ -1,12 +1,12 @@
 {
   "name": "calibre-waterfall",
   "version": "1.0.0",
-  "description": "",
+  "description": "Visualise and analyse requests reports from Calibre Snapshots in order to generate a waterfall",
   "main": "index.js",
   "scripts": {
     "dev": "node server",
     "build": "next build",
-    "test": "mocha --recursive './test/**/*.js'"
+    "test": "NODE_ENV=test mocha --recursive './test/**/*Spec.js' --file ./test/setup.js --require @babel/register"
   },
   "keywords": [],
   "author": "Sergii Paryzhskyi <parizhskiy@gmail.com>",
@@ -20,6 +20,13 @@
     "react-dom": "^16.8.6"
   },
   "devDependencies": {
+    "@babel/core": "^7.0.1",
+    "@babel/register": "^7.0.0",
+    "chai": "^4.2.0",
+    "chai-enzyme": "^1.0.0-beta.1",
+    "enzyme": "^3.9.0",
+    "enzyme-adapter-react-16": "^1.13.2",
+    "mocha": "^6.1.4",
     "prettier": "1.17.1"
   }
 }
