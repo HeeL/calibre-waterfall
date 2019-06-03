@@ -11,7 +11,7 @@ const handle = app.getRequestHandler();
 
 app.prepare().then(() => {
   const server = express();
-  server.get("/sites/:slug", (req, res) => {
+  server.get("/api/sites/:slug", (req, res) => {
     const site = R.find(R.propEq("slug", req.params.slug))(sites);
     return res.json(site);
   });
