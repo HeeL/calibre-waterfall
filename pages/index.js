@@ -5,9 +5,8 @@ import fetch from "isomorphic-unfetch";
 const Index = props => (
   <div>
     {props.sites.map(site => (
-      <Link key={site.slug}>
-        <a href={`/sites/${site.slug}`}>{site.name}</a>
-        <br />
+      <Link key={site.slug} href={`/sites/${site.slug}`}>
+        <a>{site.name}</a>
       </Link>
     ))}
   </div>

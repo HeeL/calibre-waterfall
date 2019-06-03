@@ -1,6 +1,7 @@
 import { shallow } from "enzyme";
 import React from "react";
 import { expect } from "chai";
+import Link from "next/link";
 
 import Index from "../../../pages/index.js";
 
@@ -13,7 +14,7 @@ describe("Index Page", () => {
 
   it("renders links to sites", () => {
     const index = shallow(<Index sites={[{ slug: "test", name: "bar" }]} />);
-    const links = index.find("Link a");
+    const links = index.find(Link);
 
     expect(links).to.have.length(1);
     expect(links.first()).to.have.prop("href", "/sites/test");
