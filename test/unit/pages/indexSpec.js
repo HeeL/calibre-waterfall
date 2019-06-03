@@ -3,18 +3,18 @@ import React from "react";
 import { expect } from "chai";
 import Link from "next/link";
 
-import Home from "../../../pages/index.js";
+import Index from "../../../pages/index.js";
 
-describe("Home Page", () => {
+describe("Index Page", () => {
   it("renders the page", () => {
-    const home = shallow(<Home />);
+    const index = shallow(<Index />);
 
-    expect(home).to.be.present();
+    expect(index).to.be.present();
   });
 
   it("renders links to sites", () => {
-    const home = shallow(<Home />);
-    const links = home.find(Link);
+    const index = shallow(<Index />);
+    const links = index.find(Link);
 
     expect(links).to.have.length(1);
     expect(links.first()).to.have.prop("href", "/sites/cruises");
