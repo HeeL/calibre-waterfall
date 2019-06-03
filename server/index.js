@@ -11,14 +11,15 @@ const handle = app.getRequestHandler();
 
 app.prepare().then(() => {
   const server = express();
+
   server.get("/api/sites/:slug", (req, res) => {
     const site = R.find(R.propEq("slug", req.params.slug))(sites);
     return res.json(site);
   });
 
-  server.get("*", (req, res) => {
-    return handle(req, res);
-  });
+  server.get("/api/sites", (req, res) => res.json(sites));
+
+  server.get("*", (req, res) => handle(req, res));
 
   server.listen(port, () => console.log(`Listening on port ${port}`));
 });
