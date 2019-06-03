@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "node server",
     "build": "next build",
-    "test": "NODE_ENV=test mocha --recursive './test/**/*Spec.js' --file ./test/setup.js --require @babel/register"
+    "test": "NODE_ENV=test mocha --recursive './test/**/*Spec.js' --file ./test/setup.js --require @babel/register",
+    "test:watch": "NODE_ENV=test mocha --watch --recursive './test/**/*Spec.js' --file ./test/setup.js --require @babel/register"
   },
   "keywords": [],
   "author": "Sergii Paryzhskyi <parizhskiy@gmail.com>",
