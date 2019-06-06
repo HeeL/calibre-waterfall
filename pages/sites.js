@@ -14,10 +14,9 @@ const Sites = props => (
 );
 
 Sites.getInitialProps = ({ req, query: { slug } }) => {
-  console.log(slug);
   const baseUrl = req ? `${req.protocol}://${req.get("Host")}` : "";
 
-  return fetch(`${baseUrl}/api/snapshots`)
+  return fetch(`${baseUrl}/api/snapshots/${slug}`)
     .then(result => result.json())
     .then(snapshots => ({
       snapshots
