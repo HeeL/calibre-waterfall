@@ -4,7 +4,7 @@
   "description": "Visualise and analyse requests reports from Calibre Snapshots in order to generate a waterfall",
   "main": "index.js",
   "scripts": {
-    "dev": "node server",
+    "dev": "nodemon server",
     "build": "next build",
     "test": "NODE_ENV=test mocha --recursive './test/**/*Spec.js' --file ./test/setup.js --require @babel/register",
     "test:watch": "NODE_ENV=test mocha --watch --recursive './test/**/*Spec.js' --file ./test/setup.js --require @babel/register"
@@ -30,6 +30,7 @@
     "enzyme": "^3.9.0",
     "enzyme-adapter-react-16": "^1.13.2",
     "mocha": "^6.1.4",
+    "nodemon": "^1.19.1",
     "prettier": "1.17.1"
   }
 }
