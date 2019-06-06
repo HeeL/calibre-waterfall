@@ -15,6 +15,7 @@ describe("Sites Page", () => {
   it("renders links to snapshots", () => {
     const sites = shallow(
       <Sites
+        url={{ query: { slug: "xxx" } }}
         snapshots={[
           { id: 1, created_at: "2019-06-05T05:03:45.236Z" },
           { id: 42, created_at: "2018-06-05T05:03:45.236Z" }
@@ -24,7 +25,7 @@ describe("Sites Page", () => {
     const links = sites.find(Link);
 
     expect(links).to.have.length(2);
-    expect(links.first()).to.have.prop("href", "/snapshots/1");
-    expect(links.at(1)).to.have.prop("href", "/snapshots/42");
+    expect(links.first()).to.have.prop("href", "/sites/xxx/snapshots/1");
+    expect(links.at(1)).to.have.prop("href", "/sites/xxx/snapshots/42");
   });
 });
