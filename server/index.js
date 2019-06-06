@@ -28,7 +28,15 @@ app.prepare().then(() => {
     return fetch(urlFetchSnapshots)
       .then(result => result.json())
       .then(R.filter(R.propEq("status", "completed")))
-      .then(R.map(R.pickAll(["id", "created_at"])))
+      .then(
+        R.map(snapshot => {
+          const date = new Date(snapshot.created_at);
+          return {
+            id: snapshot.id,
+            created_at: `${date.toLocaleDateString()} ${date.toLocaleTimeString()}`
+          };
+        })
+      )
       .then(snapshots => res.json(snapshots));
   });
 
