@@ -40,6 +40,18 @@ app.prepare().then(() => {
       .then(snapshots => res.json(snapshots));
   });
 
+  server.get("/api/har/:slug/:snapshot_id/:profile_id", (req, res) => {
+    const urlFetchSnapshots = `${process.env.CALIBRE_API_HOST}/api/sites/${
+      req.params.slug
+    }/snapshots/${req.params.snapshot_id}?api_key=${
+      process.env.CALIBRE_API_TOKEN
+    }`;
+    return fetch(urlFetchSnapshots)
+      .then(result => result.json())
+      .then(R.path(["pages", req.params.profile_id, "artifacts", "har"]))
+      .then(result => res.json({ harUrl: result }));
+  });
+
   server.get("/api/sites", (req, res) => res.json(sites));
 
   server.get("*", (req, res) => handle(req, res));
