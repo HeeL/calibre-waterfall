@@ -1,11 +1,14 @@
 import React from "react";
 import Link from "next/link";
+import { withRouter } from "next/router";
 
 const Sites = props => (
   <div>
     {props.snapshots.map(snapshot => (
       <div style={{ margin: "5px 10px" }} key={snapshot.id}>
-        <Link href={`/sites/${props.url.query.slug}/snapshots/${snapshot.id}`}>
+        <Link
+          href={`/sites/${props.router.query.slug}/snapshots/${snapshot.id}`}
+        >
           <a style={{ fontSize: "20px" }}>Snapshot #{snapshot.id}</a>
         </Link>{" "}
         <span style={{ fontSize: "16px", color: "#999" }}>
@@ -26,4 +29,4 @@ Sites.getInitialProps = ({ req, query: { slug } }) => {
     }));
 };
 
-export default Sites;
+export default withRouter(Sites);
