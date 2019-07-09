@@ -4,11 +4,8 @@ import Link from "next/link";
 const Sites = props => (
   <div>
     {props.snapshots.map(snapshot => (
-      <div style={{ margin: "5px 10px" }}>
-        <Link
-          key={snapshot.id}
-          href={`/sites/${props.url.query.slug}/snapshots/${snapshot.id}`}
-        >
+      <div style={{ margin: "5px 10px" }} key={snapshot.id}>
+        <Link href={`/sites/${props.url.query.slug}/snapshots/${snapshot.id}`}>
           <a style={{ fontSize: "20px" }}>Snapshot #{snapshot.id}</a>
         </Link>{" "}
         <span style={{ fontSize: "16px", color: "#999" }}>
