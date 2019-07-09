@@ -27,13 +27,27 @@ app.prepare().then(() => {
     }/snapshots?api_key=${process.env.CALIBRE_API_TOKEN}`;
     return fetch(urlFetchSnapshots)
       .then(result => result.json())
+      .then(R.slice(0, 3))
       .then(R.filter(R.propEq("status", "completed")))
+      .then(async snapshots => {
+        for (let i = 0; i < snapshots.length; i++) {
+          const snapshot = snapshots[i];
+          const snapshotDetails = await fetch(
+            `${snapshot.url}?api_key=${process.env.CALIBRE_API_TOKEN}`
+          ).then(result => result.json());
+          snapshots[i] = R.merge(snapshot, { snapshotDetails });
+        }
+        return snapshots;
+      })
       .then(
         R.map(snapshot => {
           const date = new Date(snapshot.created_at);
           return {
             id: snapshot.id,
-            created_at: `${date.toLocaleDateString()} ${date.toLocaleTimeString()}`
+            created_at: `${date.toLocaleDateString()} ${date.toLocaleTimeString()}`,
+            profiles: R.map(R.pickAll(["id", "name", "profile", "endpoint"]))(
+              snapshot.snapshotDetails.pages
+            )
           };
         })
       )
@@ -46,6 +60,7 @@ app.prepare().then(() => {
     }/snapshots/${req.params.snapshot_id}?api_key=${
       process.env.CALIBRE_API_TOKEN
     }`;
+
     return fetch(urlFetchSnapshots)
       .then(result => result.json())
       .then(R.path(["pages", req.params.profile_id, "artifacts", "har"]))
