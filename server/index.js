@@ -45,8 +45,11 @@ app.prepare().then(() => {
           return {
             id: snapshot.id,
             created_at: `${date.toLocaleDateString()} ${date.toLocaleTimeString()}`,
-            profiles: R.map(R.pickAll(["id", "name", "profile", "endpoint"]))(
-              snapshot.snapshotDetails.pages
+            profiles: R.uniqBy(
+              R.prop("id"),
+              R.map(R.pickAll(["id", "name", "endpoint"]))(
+                snapshot.snapshotDetails.pages
+              )
             )
           };
         })
@@ -54,16 +57,24 @@ app.prepare().then(() => {
       .then(snapshots => res.json(snapshots));
   });
 
-  server.get("/api/har/:slug/:snapshot_id/:profile_id", (req, res) => {
+  server.get("/api/har/:slug/:snapshot_id", (req, res) => {
     const urlFetchSnapshots = `${process.env.CALIBRE_API_HOST}/api/sites/${
       req.params.slug
     }/snapshots/${req.params.snapshot_id}?api_key=${
       process.env.CALIBRE_API_TOKEN
     }`;
-
+    const profile_name = req.query.mobile
+      ? "MotoG4, 3G connection"
+      : "Chrome Desktop";
     return fetch(urlFetchSnapshots)
       .then(result => result.json())
-      .then(R.path(["pages", req.params.profile_id, "artifacts", "har"]))
+      .then(result =>
+        R.find(
+          page =>
+            req.query.profile_id === page.id && page.profile === profile_name
+        )(result.pages)
+      )
+      .then(R.path(["artifacts", "har"]))
       .then(result => res.json({ harUrl: result }));
   });
 

@@ -25,7 +25,11 @@ class Snapshots extends React.Component {
 Snapshots.getInitialProps = ({ req, query: { id, slug } }) => {
   const baseUrl = req ? `${req.protocol}://${req.get("Host")}` : "";
 
-  return fetch(`${baseUrl}/api/har/${slug}/${id}/1`)
+  return fetch(
+    `${baseUrl}/api/har/${slug}/${id}?profile_id=${req.query.profile_id}${
+      req.query.mobile ? "&mobile=1" : ""
+    }`
+  )
     .then(response => response.json())
     .then(response => {
       return fetch(response.harUrl)
