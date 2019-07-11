@@ -2,5 +2,25 @@
   {
     "name": "Cruises",
     "slug": "cruises"
+  },
+  {
+    "name": "HC Classic",
+    "slug": "hc-classic"
+  },
+  {
+    "name": "Booking Form",
+    "slug": "booking-form"
+  },
+  {
+    "name": "SEO Topic Pages",
+    "slug": "tm-pauschalreisen"
+  },
+  {
+    "name": "HC Web",
+    "slug": "hc-web"
+  },
+  {
+    "name": "Userflow",
+    "slug": "uf-home"
   }
 ]

@@ -4,7 +4,7 @@ import { withRouter } from "next/router";
 
 const renderProfile = (slug, snapshotId, profile) => {
   return (
-    <div key={snapshotId}>
+    <div key={profile.id}>
       {profile.name}{" "}
       <Link
         href={`/sites/${slug}/snapshots/${snapshotId}?profile_id=${

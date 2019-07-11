@@ -13,6 +13,9 @@ const dev = process.env.NODE_ENV !== "production";
 const app = next({ dev });
 const handle = routes.getRequestHandler(app);
 
+const tokenForSlug = slug =>
+  process.env[`CALIBRE_API_TOKEN_${slug.toUpperCase()}`];
+
 app.prepare().then(() => {
   const server = express();
 
@@ -24,16 +27,16 @@ app.prepare().then(() => {
   server.get("/api/snapshots/:slug", (req, res) => {
     const urlFetchSnapshots = `${process.env.CALIBRE_API_HOST}/api/sites/${
       req.params.slug
-    }/snapshots?api_key=${process.env.CALIBRE_API_TOKEN}`;
+    }/snapshots?api_key=${tokenForSlug(req.params.slug)}`;
     return fetch(urlFetchSnapshots)
       .then(result => result.json())
-      .then(R.slice(0, 3))
       .then(R.filter(R.propEq("status", "completed")))
+      .then(R.slice(0, 3))
       .then(async snapshots => {
         for (let i = 0; i < snapshots.length; i++) {
           const snapshot = snapshots[i];
           const snapshotDetails = await fetch(
-            `${snapshot.url}?api_key=${process.env.CALIBRE_API_TOKEN}`
+            `${snapshot.url}?api_key=${tokenForSlug(req.params.slug)}`
           ).then(result => result.json());
           snapshots[i] = R.merge(snapshot, { snapshotDetails });
         }
@@ -60,9 +63,9 @@ app.prepare().then(() => {
   server.get("/api/har/:slug/:snapshot_id", (req, res) => {
     const urlFetchSnapshots = `${process.env.CALIBRE_API_HOST}/api/sites/${
       req.params.slug
-    }/snapshots/${req.params.snapshot_id}?api_key=${
-      process.env.CALIBRE_API_TOKEN
-    }`;
+    }/snapshots/${req.params.snapshot_id}?api_key=${tokenForSlug(
+      req.params.slug
+    )}`;
     const profile_name = req.query.mobile
       ? "MotoG4, 3G connection"
       : "Chrome Desktop";
