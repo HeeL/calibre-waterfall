@@ -2,3 +2,6 @@ node_modules
 .vscode
 .next
 .env
+Dockerfile
+deploy.sh
+deploymate.json
