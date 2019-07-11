@@ -66,15 +66,20 @@ app.prepare().then(() => {
     }/snapshots/${req.params.snapshot_id}?api_key=${tokenForSlug(
       req.params.slug
     )}`;
-    const profile_name = req.query.mobile
-      ? "MotoG4, 3G connection"
-      : "Chrome Desktop";
+    const profile_names = req.query.mobile
+      ? [
+          "motog4, 3g connection",
+          "iphone 5, regular 3g",
+          "iphone 5, 3g connection"
+        ]
+      : ["chrome desktop", "chrome wifi"];
     return fetch(urlFetchSnapshots)
       .then(result => result.json())
       .then(result =>
         R.find(
           page =>
-            req.query.profile_id === page.id && page.profile === profile_name
+            req.query.profile_id === page.id &&
+            profile_names.includes(page.profile.toLowerCase())
         )(result.pages)
       )
       .then(R.path(["artifacts", "har"]))
