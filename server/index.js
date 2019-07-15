@@ -2,6 +2,7 @@ const express = require("express");
 const next = require("next");
 const R = require("ramda");
 const fetch = require("isomorphic-unfetch");
+const createHealthcheckMiddleware = require("healthcheck-ping");
 
 require("dotenv").config();
 
@@ -18,6 +19,8 @@ const tokenForSlug = slug =>
 
 app.prepare().then(() => {
   const server = express();
+
+  server.use(createHealthcheckMiddleware());
 
   server.get("/api/sites/:slug", (req, res) => {
     const site = R.find(R.propEq("slug", req.params.slug))(sites);
