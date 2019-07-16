@@ -22,12 +22,10 @@ class Snapshots extends React.Component {
   }
 }
 
-Snapshots.getInitialProps = ({ req, query: { id, slug } }) => {
-  const baseUrl = req ? `${req.protocol}://${req.get("Host")}` : "";
-
-  return fetch(
-    `${baseUrl}/api/har/${slug}/${id}?profile_id=${req.query.profile_id}${
-      req.query.mobile ? "&mobile=1" : ""
+Snapshots.getInitialProps = ({ query: { id, slug, profile_id, mobile } }) =>
+  fetch(
+    `${process.env.APP_URL}/api/har/${slug}/${id}?profile_id=${profile_id}${
+      mobile ? "&mobile=1" : ""
     }`
   )
     .then(response => response.json())
@@ -38,6 +36,5 @@ Snapshots.getInitialProps = ({ req, query: { id, slug } }) => {
           return { harData };
         });
     });
-};
 
 export default Snapshots;

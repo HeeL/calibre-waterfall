@@ -39,14 +39,11 @@ const Sites = props => (
   </div>
 );
 
-Sites.getInitialProps = ({ req, query: { slug } }) => {
-  const baseUrl = req ? `${req.protocol}://${req.get("Host")}` : "";
-
-  return fetch(`${baseUrl}/api/snapshots/${slug}`)
+Sites.getInitialProps = ({ query: { slug } }) =>
+  fetch(`${process.env.APP_URL}/api/snapshots/${slug}`)
     .then(result => result.json())
     .then(snapshots => ({
       snapshots
     }));
-};
 
 export default withRouter(Sites);
